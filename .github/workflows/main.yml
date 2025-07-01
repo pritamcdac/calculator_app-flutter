@@ -135,7 +135,7 @@ jobs:
       - name: 📦 Archive iOS app
         run: |
           xcodebuild \
-            -project ios/Runner.xcodeproj \
+            -workspace ios/Runner.xcworkspace \
             -scheme Runner \
             -configuration Release \
             -archivePath build/ios/archive/Runner.xcarchive \
