@@ -1,25 +1,4 @@
-Skip to content
-Navigation Menu
-pritamcdac
-flutter-calculatorApp
 
-Type / to search
-Code
-Issues
-Pull requests
-2
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-Flutter CI
-Update main #29
-Jobs
-Run details
-Workflow file for this run
-.github/workflows/main.yml at ff079dd
 name: Flutter CI
 
 on:
