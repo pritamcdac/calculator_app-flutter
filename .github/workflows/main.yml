@@ -140,3 +140,11 @@ jobs:
         with:
           name: release-ipa
           path: build/ios/ipa/*.ipa
+
+      - name: 🚀 Upload IPA to TestFlight
+        run: |
+         xcrun altool --upload-app \
+         --type ios \
+         --file build/ios/ipa/YourAppName.ipa \
+         --username "${{ secrets.APPLE_ID_EMAIL }}" \
+         --password "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}"
