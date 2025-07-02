@@ -1,4 +1,26 @@
-name: Flutter CI iOS
+Skip to content
+Navigation Menu
+pritamcdac
+flutter-calculatorApp
+
+Type / to search
+Code
+Issues
+Pull requests
+2
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+Flutter CI
+Update main #29
+Jobs
+Run details
+Workflow file for this run
+.github/workflows/main.yml at ff079dd
+name: Flutter CI
 
 on:
   push:
@@ -16,7 +38,6 @@ jobs:
 
     steps:
       # ─────────────── Common Setup ───────────────
-
       - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
 
@@ -25,27 +46,13 @@ jobs:
         with:
           flutter-version: '3.29.3'
 
-      - name: ❄️ Clean build
-        run: flutter clean
-
-      - name: 📦 Install Flutter dependencies
+      - name: 📦 Install dependencies
         run: flutter pub get
 
-      - name: 📂 Set iOS Deployment Target in Podfile
-        run: |
-          sed -i '' "s/platform :ios.*/platform :ios, '16.6'/" ios/Podfile
-
-      - name: 📆 Install CocoaPods dependencies
-        run: |
-          cd ios
-          rm -rf Pods Podfile.lock .symlinks Flutter/Flutter.podspec
-          pod install --repo-update
-          cd ..
-
-      - name: 🔮 Run tests with coverage
+      - name: 🧪 Run tests with coverage
         run: flutter test --coverage
 
-      - name: 📊 Install lcov (for genhtml)
+      - name: 📈 Install lcov (for genhtml)
         run: brew install lcov
 
       - name: 📝 Generate HTML coverage report
@@ -57,18 +64,11 @@ jobs:
           name: coverage-report
           path: coverage/report
 
-      - name: ☕ Set Java version to 17
-        uses: actions/setup-java@v3
-        with:
-         distribution: 'temurin'
-         java-version: '17'
-
       # ─────────────── Android Build ───────────────
-
-      - name: 🧐 Build APK
+      - name: 🤖 Build APK
         run: flutter build apk --release
 
-      - name: 🧐 Build AAB
+      - name: 🤖 Build AAB
         run: flutter build appbundle --release
 
       - name: ☁️ Upload APK artifact
@@ -83,8 +83,7 @@ jobs:
           name: release-aab
           path: build/app/outputs/bundle/release/app-release.aab
 
-      # ─────────────── iOS Code Signing & IPA Export ───────────────
-
+      # ─────────────── iOS Code Signing & Manual IPA Export ───────────────
       - name: 🔑 Decode and import iOS certificate
         run: |
           echo "${{ secrets.IOS_CERTIFICATE_P12 }}" | base64 --decode > /tmp/certificate.p12
@@ -95,16 +94,14 @@ jobs:
           security import /tmp/certificate.p12 -k build.keychain -P "${{ secrets.IOS_CERTIFICATE_PASSWORD }}" -T /usr/bin/codesign -A
           security list-keychains -s build.keychain login.keychain
           security set-key-partition-list -S apple-tool:,apple: -s -k "password" build.keychain
-
       - name: 📃 Install provisioning profile
         run: |
           mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
           echo "${{ secrets.IOS_PROVISIONING_PROFILE }}" | base64 --decode > "$HOME/Library/MobileDevice/Provisioning Profiles/CybageCI.mobileprovision"
-
-      - name: 🔍 List code-signing identities (debug)
+      - name: 🔍 List code‑signing identities (debug)
         run: security find-identity -v -p codesigning
 
-      - name: 📜 Generate ExportOptions.plist
+      - name: 📝 Generate ExportOptions.plist
         run: |
           cat > ios/ExportOptions.plist <<'EOF'
           <?xml version="1.0" encoding="UTF-8"?>
@@ -131,32 +128,27 @@ jobs:
             </dict>
           </plist>
           EOF
-
-
       - name: 📦 Archive iOS app
         run: |
           xcodebuild -project ios/Runner.xcodeproj \
-           -scheme Runner \
-          -configuration Release \
-          -archivePath build/ios/archive/Runner.xcarchive \
-          CODE_SIGN_STYLE=Manual \
-          DEVELOPMENT_TEAM=VB78Y67GX6 \
-          PROVISIONING_PROFILE_SPECIFIER=CybageCI \
-          PRODUCT_BUNDLE_IDENTIFIER=com.cybage.alm \
-          CODE_SIGN_IDENTITY="Apple Distribution" \
-          archive
-
+            -scheme Runner \
+            -configuration Release \
+            -archivePath build/ios/archive/Runner.xcarchive \
+            CODE_SIGN_STYLE=Manual \
+            DEVELOPMENT_TEAM=VB78Y67GX6 \
+            PROVISIONING_PROFILE_SPECIFIER=CybageCI \
+            PRODUCT_BUNDLE_IDENTIFIER=com.cybage.alm \
+            CODE_SIGN_IDENTITY="Apple Distribution" \
+            archive
       - name: 📤 Export IPA manually
         run: |
           xcodebuild -exportArchive \
             -archivePath build/ios/archive/Runner.xcarchive \
             -exportOptionsPlist ios/ExportOptions.plist \
             -exportPath build/ios/ipa
-
-      - name: 🚀 Upload IPA to TestFlight
-        run: |
-          xcrun altool --upload-app \
-            --type ios \
-            --file build/ios/ipa/*.ipa \
-            --username "${{ secrets.APPLE_ID }}" \
-            --password "${{ secrets.APP_SPECIFIC_PASSWORD }}"
+      - name: ☁️ Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-ipa
+          path: build/ios/ipa/*.ipa
+Update main · pritamcdac/flutter-calculatorApp@ff079dd 
