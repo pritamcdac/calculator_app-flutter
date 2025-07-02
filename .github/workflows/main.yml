@@ -132,12 +132,6 @@ jobs:
           </plist>
           EOF
 
-      - name: 🔧 Install Flutter dependencies
-        run: flutter pub get
-
-      - name: 📦 Install CocoaPods dependencies
-        working-directory: ios
-        run: pod install
 
       - name: 📦 Archive iOS app
         run: |
