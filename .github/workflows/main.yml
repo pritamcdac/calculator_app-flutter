@@ -107,6 +107,13 @@ jobs:
             </dict>
           </plist>
           EOF
+     
+      - name: 📦 Set up CocoaPods and build
+        run: |
+               cd ios
+               rm -rf Pods Podfile.lock
+               pod install
+
       - name: 📦 Archive iOS app
         run: |
           xcodebuild -project ios/Runner.xcodeproj \
