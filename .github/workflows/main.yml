@@ -148,6 +148,7 @@ jobs:
          else
          echo "❌ IPA file not found. Exiting."
          exit 1
+         fi
 
       - name: 🚀 Upload IPA to TestFlight using iTMSTransporter
         run: |
