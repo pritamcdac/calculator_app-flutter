@@ -145,11 +145,12 @@ jobs:
          echo "Listing IPA files in build/ios/ipa/"
           ls -lh build/ios/ipa/
 
-      - name: 🚀 Upload IPA via Transporter (full path)
+      - name: 🚀 Upload IPA via Transporter 
         run: |
-         java -jar /Applications/Xcode_15.4.app/Contents/Developer/usr/bin/iTMSTransporter \
-         -m upload \
-         -assetFile build/ios/ipa/calculator_app.ipa \
-         -u "${{ secrets.APPLE_ID_EMAIL }}" \
-         -p "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}" \
-         -v informational
+        
+           xcrun iTMSTransporter \
+           -m upload \
+           -assetFile build/ios/ipa/calculator_app.ipa \
+           -u "${{ secrets.APPLE_ID_EMAIL }}" \
+           -p "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}" \
+           -v informational
