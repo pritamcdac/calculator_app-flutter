@@ -141,11 +141,11 @@ jobs:
           name: release-ipa
           path: build/ios/ipa/*.ipa
 
-      - name: 🚀 Upload IPA to TestFlight via Transporter CLI
+      - name: 🚀 Upload IPA to TestFlight via iTMSTransporter
         run: |
-          xcrun iTMSTransporter \
-          -m upload \
-          -assetFile build/ios/ipa/calculator_app.ipa \
-          -u "${{ secrets.APPLE_ID }}" \
-          -p "${{ secrets.APP_SPECIFIC_PASSWORD }}" \
-          -v informational
+         xcrun iTMSTransporter \
+         -m upload \
+         -assetFile build/ios/ipa/*.ipa \
+         -u "${{ secrets.APPLE_ID }}" \
+         -p "${{ secrets.APP_SPECIFIC_PASSWORD }}" \
+         -v informational
