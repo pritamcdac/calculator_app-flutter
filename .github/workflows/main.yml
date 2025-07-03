@@ -147,7 +147,7 @@ jobs:
 
       - name: 🚀 Upload IPA via Transporter (full path)
         run: |
-         /Applications/Xcode_15.4.app/Contents/Developer/usr/bin/iTMSTransporter \
+         java -jar /Applications/Xcode_15.4.app/Contents/Developer/usr/bin/iTMSTransporter \
          -m upload \
          -assetFile build/ios/ipa/calculator_app.ipa \
          -u "${{ secrets.APPLE_ID_EMAIL }}" \
