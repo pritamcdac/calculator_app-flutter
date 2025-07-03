@@ -140,6 +140,11 @@ jobs:
           name: release-ipa
           path: build/ios/ipa/*.ipa
 
+      - name: 🔍 Check if IPA file exists
+        run: |
+         echo "Listing IPA files in build/ios/ipa/"
+          ls -lh build/ios/ipa/
+
       - name: 🚀 Upload IPA via Transporter (full path)
         run: |
          /Applications/Xcode_15.4.app/Contents/Developer/usr/bin/iTMSTransporter \
