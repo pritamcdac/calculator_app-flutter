@@ -149,6 +149,12 @@ jobs:
          echo "❌ IPA file not found. Exiting."
          exit 1
          fi
+      
+      - name: 🔍 Check iTMSTransporter path
+        run: |
+         which iTMSTransporter
+         xcrun -f iTMSTransporter
+         ls -l $(xcrun -f iTMSTransporter)
 
       - name: 🚀 Upload IPA to TestFlight using iTMSTransporter
         run: |
