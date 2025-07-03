@@ -140,10 +140,14 @@ jobs:
           name: release-ipa
           path: build/ios/ipa/*.ipa
 
-      - name: 🔍 Check if IPA file exists
+      - name: 🔍 Verify IPA file exists
         run: |
-         echo "Listing IPA files in build/ios/ipa/"
-          ls -lh build/ios/ipa/
+         echo "Checking for IPA file..."
+         if [ -f build/ios/ipa/calculator_app.ipa ]; then
+         echo "✅ IPA file found."
+         else
+         echo "❌ IPA file not found. Exiting."
+         exit 1
 
       - name: 🚀 Upload IPA to TestFlight using iTMSTransporter
         run: |
