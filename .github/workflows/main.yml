@@ -158,9 +158,9 @@ jobs:
 
       - name: 🚀 Upload IPA to TestFlight using iTMSTransporter
         run: |
-          xcrun iTMSTransporter \
-          -m upload \
-          -assetFile /path/to/your.ipa \
-          -u "pradeepbo@cybage.com" \
-          -p "ohva-vftw-wxlf-izlr" \
-          -v informational
+           /Applications/Xcode.app/Contents/Applications/Application\ Loader.app/Contents/itms/bin/iTMSTransporter \
+           -m upload \
+           -assetFile /path/to/calculator_app.ipa \
+           -u "pradeepbo@cybage.com" \
+           -p "ohva-vftw-wxlf-izlr" \
+           -v informational
