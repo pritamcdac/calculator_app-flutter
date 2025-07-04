@@ -150,17 +150,17 @@ jobs:
          exit 1
          fi
       
-      - name: 🔍 Check iTMSTransporter path
-        run: |
-         which iTMSTransporter
-         xcrun -f iTMSTransporter
-         ls -l $(xcrun -f iTMSTransporter)
+      # - name: 🔍 Check iTMSTransporter path
+      #   run: |
+      #    which iTMSTransporter
+      #    xcrun -f iTMSTransporter
+      #    ls -l $(xcrun -f iTMSTransporter)
 
       - name: 🚀 Upload IPA to TestFlight using iTMSTransporter
         run: |
-         /usr/bin/xcrun iTMSTransporter \
-         -m upload \
-         -assetFile build/ios/ipa/calculator_app.ipa \
-         -u "${{ secrets.APPLE_ID_EMAIL }}" \
-         -p "${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}" \
-         -v informational
+          xcrun iTMSTransporter \
+          -m upload \
+          -assetFile /path/to/your.ipa \
+          -u "pradeepbo@cybage.com" \
+          -p "ohva-vftw-wxlf-izlr" \
+          -v informational
