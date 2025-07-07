@@ -1,0 +1,2 @@
+app_identifier("com.cybage.alm")       # Your iOS Bundle ID
+team_id("VB78Y67GX6")                  # Your Apple Developer Team ID
