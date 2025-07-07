@@ -72,6 +72,7 @@ jobs:
           security import /tmp/certificate.p12 -k build.keychain -P "${{ secrets.IOS_CERTIFICATE_PASSWORD }}" -T /usr/bin/codesign -A
           security list-keychains -s build.keychain login.keychain
           security set-key-partition-list -S apple-tool:,apple: -s -k "password" build.keychain
+          
       - name: 📃 Install provisioning profile
         run: |
           mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
@@ -150,17 +151,16 @@ jobs:
          exit 1
          fi
       
-      # - name: 🔍 Check iTMSTransporter path
-      #   run: |
-      #    which iTMSTransporter
-      #    xcrun -f iTMSTransporter
-      #    ls -l $(xcrun -f iTMSTransporter)
-
-      - name: 🚀 Upload IPA to TestFlight using iTMSTransporter
+      - name: 📦 Install Fastlane
         run: |
-         /Applications/Xcode.app/Contents/Developer/usr/bin/iTMSTransporter \
-         -m upload \
-         -assetFile build/ios/ipa/calculator_app.ipa \
-         -u "pradeepbo@cybage.com" \
-         -p "ohva-vftw-wxlf-izlr" \
-         -v informational
+         gem install fastlane -NV
+         cd ios
+
+      - name: 🚀 Upload to TestFlight using Fastlane
+        env:
+         APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+         APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+         APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        run: |
+         cd ios
+         fastlane beta
