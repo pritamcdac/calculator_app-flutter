@@ -169,10 +169,12 @@ jobs:
       #   run: |
       #    cd ios
       #    fastlane beta
+       
       - name: 🚀 Upload IPA to TestFlight
         run: |
-              cd ios
-              fastlane beta
-              env:
-              APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
-              APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+            cd ios
+            fastlane beta
+        env:
+           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+           APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
