@@ -160,7 +160,11 @@ jobs:
           mkdir -p /Users/runner/private_keys
           printf '%s' "${{ secrets.APP_STORE_CONNECT_API_KEY }}" > /Users/runner/private_keys/AuthKey_8IV3FR4JWZ25.p8
 
-      
+      - name: 🐛 Debug AuthKey content (TEMPORARY)
+        run: |
+          echo "Printing AuthKey file content:"
+          cat /Users/runner/private_keys/AuthKey_8IV3FR4JWZ25.p8
+
       # - name: Decode and write AuthKey to file
       #   run: |
       #    mkdir -p /Users/runner/private_keys
