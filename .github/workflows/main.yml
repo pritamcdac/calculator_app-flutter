@@ -155,20 +155,16 @@ jobs:
          gem install fastlane -NV
          cd ios
         
-      - name: 📝 Write AuthKey file safely
+      - name: 📝 Write AuthKey (.p8) safely
         run: |
           mkdir -p /Users/runner/private_keys
-          echo "Writing private key to file..."
-          printf "%s\n" "${{ secrets.APP_STORE_CONNECT_API_KEY }}" > /Users/runner/private_keys/AuthKey_JRENT3KZU0AE.p8
-          echo "✅ Key file written at /Users/runner/private_keys/AuthKey_JRENT3KZU0AE.p8"
-          ls -l /Users/runner/private_keys
-
+          printf '%s' "${{ secrets.APP_STORE_CONNECT_API_KEY }}" > /Users/runner/private_keys/AuthKey_JRENT3KZU0AE.p8
 
       
-      - name: Decode and write AuthKey to file
-        run: |
-         mkdir -p /Users/runner/private_keys
-         echo "${{ secrets.APP_STORE_CONNECT_API_KEY }}" | base64 --decode > /Users/runner/private_keys/AuthKey_JRENT3KZU0AE.p8
+      # - name: Decode and write AuthKey to file
+      #   run: |
+      #    mkdir -p /Users/runner/private_keys
+      #    echo "${{ secrets.APP_STORE_CONNECT_API_KEY }}" | base64 --decode > /Users/runner/private_keys/AuthKey_JRENT3KZU0AE.p8
       #   env:
       #    APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
       #    APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
