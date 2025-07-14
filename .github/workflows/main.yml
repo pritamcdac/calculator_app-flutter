@@ -158,13 +158,13 @@ jobs:
       - name: 📝 Write AuthKey (.p8) safely
         run: |
           mkdir -p /Users/runner/private_keys
-          printf '%s' "${{ secrets.APP_STORE_CONNECT_API_KEY }}" > /Users/runner/private_keys/AuthKey_JRENT3KZU0AE.p8
+          printf '%s' "${{ secrets.APP_STORE_CONNECT_API_KEY }}" > /Users/runner/private_keys/AuthKey_8IV3FR4JWZ25.p8
 
       
       # - name: Decode and write AuthKey to file
       #   run: |
       #    mkdir -p /Users/runner/private_keys
-      #    echo "${{ secrets.APP_STORE_CONNECT_API_KEY }}" | base64 --decode > /Users/runner/private_keys/AuthKey_JRENT3KZU0AE.p8
+      #    echo "${{ secrets.APP_STORE_CONNECT_API_KEY }}" | base64 --decode > /Users/runner/private_keys/AuthKey_8IV3FR4JWZ25.p8
       #   env:
       #    APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
       #    APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
@@ -178,6 +178,6 @@ jobs:
             cd ios
             fastlane beta
         env:
-           APP_STORE_CONNECT_API_KEY_ID: JRENT3KZU0AE
+           APP_STORE_CONNECT_API_KEY_ID: 8IV3FR4JWZ25
            APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
            APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
