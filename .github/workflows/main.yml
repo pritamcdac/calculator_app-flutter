@@ -154,6 +154,11 @@ jobs:
         run: |
          gem install fastlane -NV
          cd ios
+        
+      - name: Check AuthKey content
+        run: |
+           xxd /Users/runner/private_keys/AuthKey_JRENT3KZU0AE.p8
+
       
       - name: Decode and write AuthKey to file
         run: |
