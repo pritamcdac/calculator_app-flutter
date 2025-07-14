@@ -155,9 +155,14 @@ jobs:
          gem install fastlane -NV
          cd ios
         
-      - name: Check AuthKey content
+      - name: 📝 Write AuthKey file safely
         run: |
-           xxd /Users/runner/private_keys/AuthKey_JRENT3KZU0AE.p8
+          mkdir -p /Users/runner/private_keys
+          echo "Writing private key to file..."
+          printf "%s\n" "${{ secrets.APP_STORE_CONNECT_API_KEY }}" > /Users/runner/private_keys/AuthKey_JRENT3KZU0AE.p8
+          echo "✅ Key file written at /Users/runner/private_keys/AuthKey_JRENT3KZU0AE.p8"
+          ls -l /Users/runner/private_keys
+
 
       
       - name: Decode and write AuthKey to file
