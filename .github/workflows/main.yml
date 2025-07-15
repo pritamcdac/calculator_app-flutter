@@ -194,7 +194,7 @@ jobs:
          app-path: build/ios/ipa/calculator_app.ipa
          issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
          api-private-key: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
-         key-id: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+         key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
          app-type: ios
 
 
