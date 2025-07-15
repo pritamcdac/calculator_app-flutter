@@ -150,22 +150,22 @@ jobs:
          exit 1
          fi
       
-      - name: 📦 Set up Fastlane with Bundler
-        run: |
-         cd ios
-         echo -e "source 'https://rubygems.org'\ngem 'fastlane'" > Gemfile
-         gem install bundler
-         bundle install
+      # - name: 📦 Set up Fastlane with Bundler
+      #   run: |
+      #    cd ios
+      #    echo -e "source 'https://rubygems.org'\ngem 'fastlane'" > Gemfile
+      #    gem install bundler
+      #    bundle install
         
-      - name: 📝 Write AuthKey (.p8) safely
-        run: |
-          mkdir -p /Users/runner/private_keys
-          printf '%s' "${{ secrets.APP_STORE_CONNECT_API_KEY }}" > /Users/runner/private_keys/AuthKey_8IV3FR4JWZ25.p8
+      # - name: 📝 Write AuthKey (.p8) safely
+      #   run: |
+      #     mkdir -p /Users/runner/private_keys
+      #     printf '%s' "${{ secrets.APP_STORE_CONNECT_API_KEY }}" > /Users/runner/private_keys/AuthKey_8IV3FR4JWZ25.p8
 
-      - name: 🐛 Debug AuthKey content (TEMPORARY)
-        run: |
-          echo "Printing AuthKey file content:"
-          cat /Users/runner/private_keys/AuthKey_8IV3FR4JWZ25.p8
+      # - name: 🐛 Debug AuthKey content (TEMPORARY)
+      #   run: |
+      #     echo "Printing AuthKey file content:"
+      #     cat /Users/runner/private_keys/AuthKey_8IV3FR4JWZ25.p8
 
       # - name: Decode and write AuthKey to file
       #   run: |
@@ -179,11 +179,21 @@ jobs:
       #    cd ios
       #    fastlane beta
        
+      # - name: 🚀 Upload IPA to TestFlight
+      #   run: |
+      #       cd ios
+      #       bundle exec fastlane beta
+      #   env:
+      #      APP_STORE_CONNECT_API_KEY_ID: 8IV3FR4JWZ25
+      #      APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      #      APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+       
       - name: 🚀 Upload IPA to TestFlight
-        run: |
-            cd ios
-            bundle exec fastlane beta
-        env:
-           APP_STORE_CONNECT_API_KEY_ID: 8IV3FR4JWZ25
-           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
-           APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+        uses: apple-actions/upload-testflight-build@v1
+        with:
+           app-path: build/ios/ipa/calculator_app.ipa
+           issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+           api-key-id: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+           api-private-key: ${{ secrets.APP_STORE_CONNECT_API_KEY }}   
+
+       
