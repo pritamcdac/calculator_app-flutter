@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-15
 
     env:
       FLUTTER_ROOT: /Users/runner/hostedtoolcache/flutter/stable-3.29.3-arm64
@@ -150,10 +150,12 @@ jobs:
          exit 1
          fi
       
-      - name: 📦 Install Fastlane
+      - name: 📦 Set up Fastlane with Bundler
         run: |
-         gem install fastlane -NV
          cd ios
+         echo -e "source 'https://rubygems.org'\ngem 'fastlane'" > Gemfile
+         gem install bundler
+         bundle install
         
       - name: 📝 Write AuthKey (.p8) safely
         run: |
@@ -180,7 +182,7 @@ jobs:
       - name: 🚀 Upload IPA to TestFlight
         run: |
             cd ios
-            fastlane beta
+            bundle exec fastlane beta
         env:
            APP_STORE_CONNECT_API_KEY_ID: 8IV3FR4JWZ25
            APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
